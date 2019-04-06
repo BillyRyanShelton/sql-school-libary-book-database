@@ -1,0 +1,43 @@
+{
+  "name": "sql-school-libary-book-database",
+  "version": "1.0.0",
+  "description": "The following application allows a library to create, read, update, and delete books for their records.  This project was created using JavaScript, Node.js, Express, Pug, SQLite and the ORM Sequelize.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BillyRyanShelton/sql-school-libary-book-database.git"
+  },
+  "keywords": [
+    "library",
+    "database",
+    "crud",
+    "create",
+    "read",
+    "update",
+    "delete",
+    "sequelize",
+    "orm",
+    "sqlite",
+    "express",
+    "pug",
+    "node",
+    "javascript",
+    "project"
+  ],
+  "author": "Billy Shelton",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BillyRyanShelton/sql-school-libary-book-database/issues"
+  },
+  "homepage": "https://github.com/BillyRyanShelton/sql-school-libary-book-database#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "pug": "^2.0.3",
+    "sequelize": "^5.2.12",
+    "sequelize-cli": "^5.4.0",
+    "sqlite3": "^4.0.6"
+  }
+}
