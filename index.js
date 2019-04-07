@@ -1,0 +1,31 @@
+//node packages express, body parser are loaded
+const express = require('express');
+const bodyParser = require('body-parser');
+const path = require('path');
+const port = process.env.PORT || 3000;
+require('console-stamp')(console, '[HH:MM:ss.l]');
+
+//an express module is created
+const app = express();
+
+//the key-value pair in req.body is modified so the value is either a string or array
+app.use(bodyParser.urlencoded({ extended: false}));
+//the app is allowed acces to the public folder and the pug template engine is set
+app.use('/static', express.static('public'));
+app.set('view engine', 'pug');
+
+//the books js file is loaded
+// const index = require('./routes/books');
+const books = require('./routes/books');
+
+
+//the books page is called
+// app.use(index);
+app.use(books);
+
+//app listens for connections
+app.listen(port, ()=> {
+    console.log('Book Page is up!');
+});
+
+
