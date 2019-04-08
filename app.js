@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const port = process.env.PORT || 3000;
 require('console-stamp')(console, '[HH:MM:ss.l]');
-
+var sequelize = require("./models").sequelize;
 //an express module is created
 const app = express();
 
@@ -23,8 +23,10 @@ app.use(books);
 app.use(pageNotFound);
 
 //app listens for connections
-app.listen(port, ()=> {
-    console.log('Book Page is up!');
+sequelize.sync()
+    .then(() => {
+    app.listen(port, ()=> {
+        console.log('Book Page is up!');
+    });
 });
-
 
