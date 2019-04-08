@@ -22,49 +22,45 @@ router.post('/books/new', (req, res) => {
     res.render('new-book');
 });
 
-//get request for book id dynamically creates the project webpage
+//get request for book id dynamically creates the book update page
 router.get('/books/:id', (req, res, next) => {
-    // let id = req.params.id;
-
-    // if(id >= 0 && id <= projects.length-1) {
-    //     let projectData = projects[id];
+    if(id >= 0 && id <= projects.length-1) {
+        let projectData = projects[id];
         
-        res.render('project');//, {
-    //         projectName : projects[id].project_name,
-    //         projectDesc : projects[id].description,
-    //         projectTech : projects[id].technologies,
-    //         projectLink : projects[id].live_link,
-    //         projectGit : projects[id].github_link,
-    //         projectImg1 : projects[id].image_urls[0],
-    //         projectImg2 : projects[id].image_urls[1],
-    //         projectImg3 : projects[id].image_urls[2],
-    //     }); 
-    // } else {
-    //     next();
-    // }
+    res.render('update-book', {
+        // projectName : projects[id].project_name,
+        // projectDesc : projects[id].description,
+        // projectTech : projects[id].technologies,
+        // projectLink : projects[id].live_link,
+        // projectGit : projects[id].github_link,
+        // projectImg1 : projects[id].image_urls[0],
+        // projectImg2 : projects[id].image_urls[1],
+        // projectImg3 : projects[id].image_urls[2],
+    }); 
+} else {
+    next();
+}
 });
 
 
 //post request for book id dynamically updates book info
 router.post('/books/:id', (req, res, next) => {
-    // let id = req.params.id;
-
-    // if(id >= 0 && id <= projects.length-1) {
-    //     let projectData = projects[id];
+    if(id >= 0 && id <= projects.length-1) {
+        let projectData = projects[id];
         
-        res.render('project');//, {
-    //         projectName : projects[id].project_name,
-    //         projectDesc : projects[id].description,
-    //         projectTech : projects[id].technologies,
-    //         projectLink : projects[id].live_link,
-    //         projectGit : projects[id].github_link,
-    //         projectImg1 : projects[id].image_urls[0],
-    //         projectImg2 : projects[id].image_urls[1],
-    //         projectImg3 : projects[id].image_urls[2],
-    //     }); 
-    // } else {
-    //     next();
-    // }
+    res.render('project', {
+        // projectName : projects[id].project_name,
+        // projectDesc : projects[id].description,
+        // projectTech : projects[id].technologies,
+        // projectLink : projects[id].live_link,
+        // projectGit : projects[id].github_link,
+        // projectImg1 : projects[id].image_urls[0],
+        // projectImg2 : projects[id].image_urls[1],
+        // projectImg3 : projects[id].image_urls[2],
+    }); 
+} else {
+    next();
+}
 });
 
 
@@ -72,22 +68,22 @@ router.post('/books/:id', (req, res, next) => {
 router.post('/books/:id/delete', (req, res, next) => {
     // let id = req.params.id;
 
-    // if(id >= 0 && id <= projects.length-1) {
-    //     let projectData = projects[id];
+    if(id >= 0 && id <= projects.length-1) {
+        let projectData = projects[id];
         
-        res.render('project');//, {
-    //         projectName : projects[id].project_name,
-    //         projectDesc : projects[id].description,
-    //         projectTech : projects[id].technologies,
-    //         projectLink : projects[id].live_link,
-    //         projectGit : projects[id].github_link,
-    //         projectImg1 : projects[id].image_urls[0],
-    //         projectImg2 : projects[id].image_urls[1],
-    //         projectImg3 : projects[id].image_urls[2],
-    //     }); 
-    // } else {
-    //     next();
-    // }
+    res.render('project', {
+        // projectName : projects[id].project_name,
+        // projectDesc : projects[id].description,
+        // projectTech : projects[id].technologies,
+        // projectLink : projects[id].live_link,
+        // projectGit : projects[id].github_link,
+        // projectImg1 : projects[id].image_urls[0],
+        // projectImg2 : projects[id].image_urls[1],
+        // projectImg3 : projects[id].image_urls[2],
+    }); 
+} else {
+    next();
+}
 });
 
 

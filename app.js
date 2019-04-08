@@ -16,11 +16,11 @@ app.set('view engine', 'pug');
 
 //the page routes are loaded
 const books = require('./routes/books');
-const error = require('./routes/error');
+const pageNotFound = require('./routes/page-not-found');
 
 //the page routes are called
 app.use(books);
-app.use(error);
+app.use(pageNotFound);
 
 //app listens for connections
 app.listen(port, ()=> {

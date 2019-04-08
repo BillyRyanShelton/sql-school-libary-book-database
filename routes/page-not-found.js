@@ -12,7 +12,7 @@ router.use((req, res, next) => {
 router.use((err, req, res, next) => {
     res.locals.error = err;
     res.status(err.status);
-    res.render('error', err);
+    res.render('page-not-found', err);
 });
 
 module.exports = router;
