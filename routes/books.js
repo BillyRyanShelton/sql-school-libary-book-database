@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
+let Books = require("../models").books;
 
 //get request for main page loads books page
 router.get('/', (req, res) => {
