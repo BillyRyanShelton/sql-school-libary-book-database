@@ -5,6 +5,8 @@ const path = require('path');
 const port = process.env.PORT || 3000;
 require('console-stamp')(console, '[HH:MM:ss.l]');
 var sequelize = require("./models").sequelize;
+
+
 //an express module is created
 const app = express();
 
