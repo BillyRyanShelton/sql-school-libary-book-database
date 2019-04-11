@@ -67,24 +67,19 @@ router.post('/books/:id', (req, res, next) => {
 
 //post request to delete a specific book
 router.post('/books/:id/delete', (req, res, next) => {
-    // let id = req.params.id;
+    let id = req.params.id;
+    if(id >= 0 && id <= Books.max('id')) {
+        Books.destroy({
+            where: {
+                id: id
+            }
+        });
 
-    if(id >= 0 && id <= projects.length-1) {
-        let projectData = projects[id];
+        res.redirect('/books');
         
-    res.render('project', {
-        // projectName : projects[id].project_name,
-        // projectDesc : projects[id].description,
-        // projectTech : projects[id].technologies,
-        // projectLink : projects[id].live_link,
-        // projectGit : projects[id].github_link,
-        // projectImg1 : projects[id].image_urls[0],
-        // projectImg2 : projects[id].image_urls[1],
-        // projectImg3 : projects[id].image_urls[2],
-    }); 
-} else {
-    next();
-}
+    } else {
+        next();
+    }
 });
 
 
