@@ -46,7 +46,8 @@ router.get('/books/:id', (req, res, next) => {
 router.post('/books/:id', (req, res, next) => {
      let book = req.body;
      let idNum = req.params.id;
-    if(book.title != null && book.author != null) {
+     console.log(book.title);
+    if(book.title != '' && book.author != '') {
         res.render('update-book', {book:book});
         Books.update({
             title: book.title,
@@ -57,7 +58,10 @@ router.post('/books/:id', (req, res, next) => {
             where: {id: idNum}
         }
         );
-    } else {
+    } else if(book.title == '' || book.author == ''){
+        res.render('form-error', {book:book, heading: 'Update Book'});
+    }
+    else {
         next();
     }
 });
