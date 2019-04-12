@@ -9,8 +9,6 @@ router.get('/', (req, res) => {
 });
 
 
-// each book in books
-
 //get request for books page
 router.get('/books', (req, res) => {
     Books.findAll().then((books)=>{
@@ -22,7 +20,7 @@ router.get('/books', (req, res) => {
 //get request for new book
 router.get('/books/new', (req, res) => {
     //an empty instance of the books model is created
-    res.render('new-book', {book: Books.build()});
+    res.render('new-book', {book: Books.build(), title: "New Book"});
 });
 
 //post request for new book
@@ -46,22 +44,22 @@ router.get('/books/:id', (req, res, next) => {
 
 //post request for book id dynamically updates book info
 router.post('/books/:id', (req, res, next) => {
-    if(id >= 0 && id <= projects.length-1) {
-        let projectData = projects[id];
-        
-    res.render('project', {
-        // projectName : projects[id].project_name,
-        // projectDesc : projects[id].description,
-        // projectTech : projects[id].technologies,
-        // projectLink : projects[id].live_link,
-        // projectGit : projects[id].github_link,
-        // projectImg1 : projects[id].image_urls[0],
-        // projectImg2 : projects[id].image_urls[1],
-        // projectImg3 : projects[id].image_urls[2],
-    }); 
-} else {
-    next();
-}
+     let book = req.body;
+     let idNum = req.params.id;
+    if(book.title != null && book.author != null) {
+        res.render('update-book', {book:book});
+        Books.update({
+            title: book.title,
+            author: book.author,
+            genre: book.genre,
+            year: book.year
+        }, {
+            where: {id: idNum}
+        }
+        );
+    } else {
+        next();
+    }
 });
 
 
