@@ -44,19 +44,23 @@ router.get('/books/:id', (req, res, next) => {
     }
 });
 
-//NEED TO FIX
-//put request for book id dynamically updates book info
+
+//post request for book id dynamically updates book info
 router.post('/books/:id', (req, res, next) => {
+    //first the book id is found in the database
     Books.findByPk(req.params.id).then((book) => {
+        //if it is found then the book is updated
         if(book) {
-            console.log(req.body);
             return book.update(req.body);
-        } else {
+        } //if not found then a error is sent
+        else {
             res.send(404);
         }
     }).then((book) => {
+        //the book update page is refreshed with the new book info
         res.render('update-book', {book:book});
     }).catch((err) => {
+        //if there is an error, a new book item is sent to the update page along with the errors
         if(err.name === "SequelizeValidationError") {
             let book = Books.build(req.body);
             book.id = req.params.id;
