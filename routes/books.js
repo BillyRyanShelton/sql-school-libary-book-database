@@ -34,14 +34,14 @@ router.post('/books/new', (req, res) => {
 
 //get request for book id dynamically creates the book update page
 router.get('/books/:id', (req, res, next) => {
-    let id = req.params.id;
-    if(id >= 0 && id <= Books.max('id')) {
-        Books.findByPk(id).then((book) => {
-            res.render('update-book', {book:book});
-        });
-    } else {
-        next();
-    }
+    Books.findByPk(req.params.id).then((book) => {
+        //if it is found then the book is updated
+        if(book) {
+             res.render('update-book', {book:book});
+        } else{
+            next();
+        }
+    });
 });
 
 
@@ -52,10 +52,7 @@ router.post('/books/:id', (req, res, next) => {
         //if it is found then the book is updated
         if(book) {
             return book.update(req.body);
-        } //if not found then a error is sent
-        else {
-            res.send(404);
-        }
+        } 
     }).then((book) => {
         //the book update page is refreshed with the new book info
         res.render('update-book', {book:book});
@@ -69,9 +66,7 @@ router.post('/books/:id', (req, res, next) => {
                 book: book,
                 errors: err.errors
             });
-        } else {
-            next();
-        }
+        } 
     });
     
 
