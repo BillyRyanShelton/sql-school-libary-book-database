@@ -3,7 +3,7 @@ const router = express.Router();
 let Books = require("../models").Books;
 var sequelize = require("../models").sequelize;
 
-//get request for main page loads books page
+//get request for main page loads the books page
 router.get('/', (req, res) => {
     res.redirect('/books');
 });
@@ -23,11 +23,14 @@ router.get('/books/new', (req, res) => {
     res.render('new-book', {book: Books.build(), title: "New Book"});
 });
 
+//NEED TO FIX
 //post request for new book
 router.post('/books/new', (req, res) => {
     // Books.create(req.body).then(function(book))
         res.render('new-book');
 });
+
+
 
 //get request for book id dynamically creates the book update page
 router.get('/books/:id', (req, res, next) => {
@@ -41,29 +44,58 @@ router.get('/books/:id', (req, res, next) => {
     }
 });
 
-
-//post request for book id dynamically updates book info
+//NEED TO FIX
+//put request for book id dynamically updates book info
 router.post('/books/:id', (req, res, next) => {
-     let book = req.body;
-     let idNum = req.params.id;
-     console.log(book.title);
-    if(book.title != '' && book.author != '') {
-        res.render('update-book', {book:book});
-        Books.update({
-            title: book.title,
-            author: book.author,
-            genre: book.genre,
-            year: book.year
-        }, {
-            where: {id: idNum}
+    Books.findByPk(req.params.id).then((book) => {
+        if(book) {
+            console.log(req.body);
+            return book.update(req.body);
+        } else {
+            res.send(404);
         }
-        );
-    } else if(book.title == '' || book.author == ''){
-        res.render('form-error', {book:book, heading: 'Update Book'});
-    }
-    else {
-        next();
-    }
+    }).then((book) => {
+        res.render('update-book', {book:book});
+    }).catch((err) => {
+        if(err.name === "SequelizeValidationError") {
+            let book = Books.build(req.body);
+            book.id = req.params.id;
+
+            res.render('update-book', {
+                book: book,
+                errors: err.errors
+            });
+        } else {
+            next();
+        }
+    });
+    
+
+
+
+
+
+    //  let book = req.body;
+    //  let idNum = req.params.id;
+    //  console.log(book.title);
+    // if(book.title != '' && book.author != '') {
+    //     res.render('update-book', {book:book});
+    //     Books.update({
+    //         title: book.title,
+    //         author: book.author,
+    //         genre: book.genre,
+    //         year: book.year
+    //     }, {
+    //         where: {id: idNum}
+    //     }
+    //     );
+    // } else if(book.title == '' || book.author == ''){
+    //     console.log('Error:  Author and Title are required when updating a book.');
+    //     res.render('form-error', {book:book, heading: 'Update Book'});
+    // }
+    // else {
+    //     next();
+    // }
 });
 
 
@@ -77,7 +109,7 @@ router.post('/books/:id/delete', (req, res, next) => {
             }
         });
 
-        res.redirect('/books');
+        res.redirect('/');
         
     } else {
         next();
