@@ -68,51 +68,24 @@ router.post('/books/:id', (req, res, next) => {
             });
         } 
     });
-    
-
-
-
-
-
-    //  let book = req.body;
-    //  let idNum = req.params.id;
-    //  console.log(book.title);
-    // if(book.title != '' && book.author != '') {
-    //     res.render('update-book', {book:book});
-    //     Books.update({
-    //         title: book.title,
-    //         author: book.author,
-    //         genre: book.genre,
-    //         year: book.year
-    //     }, {
-    //         where: {id: idNum}
-    //     }
-    //     );
-    // } else if(book.title == '' || book.author == ''){
-    //     console.log('Error:  Author and Title are required when updating a book.');
-    //     res.render('form-error', {book:book, heading: 'Update Book'});
-    // }
-    // else {
-    //     next();
-    // }
 });
 
 
 //post request to delete a specific book
 router.post('/books/:id/delete', (req, res, next) => {
-    let id = req.params.id;
-    if(id >= 0 && id <= Books.max('id')) {
-        Books.destroy({
-            where: {
-                id: id
-            }
-        });
-
-        res.redirect('/');
-        
-    } else {
-        next();
-    }
+    Books.findByPk(req.params.id).then((book) => {
+        //if it is found then the book is updated
+        if(book) {
+            Books.destroy({
+                where: {
+                    id: req.params.id
+                }
+            });
+            res.redirect('/');
+        } else{
+            next();
+        }
+    });
 });
 
 
