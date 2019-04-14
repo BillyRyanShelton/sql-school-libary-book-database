@@ -5,6 +5,7 @@ table{
 }
 
 body {
+  background-image: url('../bananas.png');
   padding: 10px 50px 50px;
   font: 18px "Garamond", serif;
 }
