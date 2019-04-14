@@ -7,7 +7,7 @@ require('console-stamp')(console, '[HH:MM:ss.l]');
 var sequelize = require("./models").sequelize;
 
 
-//an express module is created
+//an express module is created for the app
 const app = express();
 
 //the key-value pair in req.body is modified so the value is either a string or array
