@@ -3,7 +3,12 @@ extends layout.pug
 block content
   body
     h1 New Book
-    form
+    form(method='post' action='/books/new')
+      if errors
+        h2.error Oooops!
+        ul.error
+          each err in errors
+            li=err.message
       p
         label(for='title') Title
         input#title(name='title', type='text', value=book.title)

@@ -3,13 +3,13 @@ const router = express.Router();
 let Books = require("../models").Books;
 var sequelize = require("../models").sequelize;
 
-//get request for main page loads the books page
+//get request for root redirects to books page
 router.get('/', (req, res) => {
     res.redirect('/books');
 });
 
 
-//get request for books page
+//get request for books page renders all the books in the database
 router.get('/books', (req, res) => {
     Books.findAll().then((books)=>{
         res.render('index', {books: books});
@@ -17,17 +17,35 @@ router.get('/books', (req, res) => {
 });
 
 
-//get request for new book
+//get request for new book renders the new book page
 router.get('/books/new', (req, res) => {
     //an empty instance of the books model is created
     res.render('new-book', {book: Books.build(), title: "New Book"});
 });
 
-//NEED TO FIX
-//post request for new book
+//post request for new a book builds a new instance and adds it to the database
 router.post('/books/new', (req, res) => {
-    // Books.create(req.body).then(function(book))
-        res.render('new-book');
+    let newBook = req.body;
+    Books.build({
+        title: newBook.title, 
+        author: newBook.author, 
+        genre: newBook.genre, 
+        year: newBook.year
+    }).save()
+    .then((book) => {
+        res.redirect('/');
+    }).catch((err) => {
+        //if the title or author is missing, the submission is denied and an error is shown
+        if(err.name === "SequelizeValidationError") {
+            let book = Books.build(req.body);
+            book.id = req.params.id;
+
+            res.render('new-book', {
+                book: book,
+                errors: err.errors
+            });
+        } 
+    });
 });
 
 
@@ -57,7 +75,7 @@ router.post('/books/:id', (req, res, next) => {
         //the book update page is refreshed with the new book info
         res.render('update-book', {book:book});
     }).catch((err) => {
-        //if there is an error, a new book item is sent to the update page along with the errors
+        ///if the title or author is missing, the submission is denied and an error is shown
         if(err.name === "SequelizeValidationError") {
             let book = Books.build(req.body);
             book.id = req.params.id;
